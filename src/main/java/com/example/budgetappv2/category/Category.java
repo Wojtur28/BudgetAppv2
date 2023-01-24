@@ -16,13 +16,17 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
+@Table(name = "categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private BigDecimal budget;
     private String name;
+    @Column(name = "start_date")
     private Date startDate;
+    @Column(name = "end_date")
     private Date endDate;
     @OneToMany
     @JoinColumn(name = "transcation_id")

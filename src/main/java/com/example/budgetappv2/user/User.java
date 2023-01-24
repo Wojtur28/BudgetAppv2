@@ -2,10 +2,7 @@ package com.example.budgetappv2.user;
 
 import com.example.budgetappv2.group.Group;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 
 @Entity
 @Table(name = "users")
@@ -21,10 +19,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @NonNull
     private String username;
+    @NonNull
     private String password;
     @OneToMany
     @JoinColumn(name = "group_id")
     private List<Group> groups;
+
 
 }
