@@ -20,9 +20,13 @@ public class UserService {
     }
 
     public ResponseEntity<User> getUserById(Long id) {
-        return userRepository.findById(id)
-                .map(user -> ResponseEntity.ok().body(user))
-                .orElse(ResponseEntity.notFound().build());
+        try{
+            return new ResponseEntity<>(userRepository.findById(id).stream().findFirst()
+                    .orElse(null), HttpStatus.FOUND);
+        } catch (Exception e) {
+            log.error("Error with \"getUserById\"");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /*public ResponseEntity<User> getUserByUsername(String username) {

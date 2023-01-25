@@ -1,9 +1,9 @@
-package com.example.budgetappv2.user;
+package com.example.budgetappv2.transaction;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface TransactionRepository extends JpaRepository<Transaction, Long>{
 
 }
