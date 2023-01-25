@@ -1,6 +1,6 @@
 package com.example.budgetappv2.transaction;
 
-public enum Type {
+public enum TransactionType {
     TRANSFER,
     STANDING_ORDER,
     CARD_PAYMENT,

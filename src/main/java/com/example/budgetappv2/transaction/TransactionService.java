@@ -41,7 +41,7 @@ public class TransactionService {
     public ResponseEntity<Transaction> addTransaction(Transaction transaction) {
         try {
             Transaction _transaction = transactionRepository.save(new Transaction(transaction.getDate(),
-                    transaction.getTotal(), transaction.getType(), transaction.getNotes()));
+                    transaction.getTotal(), transaction.getTransactionType(), transaction.getNotes()));
             return new ResponseEntity<>(_transaction, HttpStatus.CREATED);
         } catch (Exception e) {
             log.info("createTransaction exception: "+ transaction.toString()+e.getMessage());
@@ -57,7 +57,7 @@ public class TransactionService {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             _transaction.setDate(transaction.getDate());
             _transaction.setTotal(transaction.getTotal());
-            _transaction.setType(transaction.getType());
+            _transaction.setTransactionType(transaction.getTransactionType());
             _transaction.setNotes(transaction.getNotes());
             return ResponseEntity.ok().body(transactionRepository.save(_transaction));
         } catch (Exception e) {

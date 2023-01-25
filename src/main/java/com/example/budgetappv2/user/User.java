@@ -23,9 +23,15 @@ public class User {
     private String username;
     @NonNull
     private String password;
-    @OneToMany
-    @JoinColumn(name = "group_id")
+    @OneToMany(
+            mappedBy = "users",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Group> groups;
 
 
+
+
+    //TODO: Create POST request for user with groups
 }

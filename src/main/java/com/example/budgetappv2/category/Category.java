@@ -1,5 +1,6 @@
 package com.example.budgetappv2.category;
 
+import com.example.budgetappv2.group.Group;
 import com.example.budgetappv2.transaction.Transaction;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -33,8 +34,15 @@ public class Category {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NonNull
     private Date endDate;
-    @OneToMany
-    @JoinColumn(name = "transcation_id")
+    @OneToMany(
+            mappedBy = "category",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Transaction> transactions;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
 
 }

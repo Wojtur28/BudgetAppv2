@@ -1,6 +1,7 @@
 package com.example.budgetappv2.group;
 
 import com.example.budgetappv2.category.Category;
+import com.example.budgetappv2.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +22,15 @@ public class Group {
     @NonNull
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "categoty_id")
+    @OneToMany(
+            mappedBy = "group",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Category> categories;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User users;
 
 }

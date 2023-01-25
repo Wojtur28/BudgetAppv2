@@ -25,9 +25,10 @@ public class Transaction {
     @NonNull
     private BigDecimal total;
     @NonNull
-    private Type type;
+    private TransactionType transactionType;
     @NonNull
     private String notes;
     @ManyToOne
-    private Category category_id;
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
