@@ -40,9 +40,7 @@ public class TransactionService {
 
     public ResponseEntity<Transaction> addTransaction(Transaction transaction) {
         try {
-            Transaction _transaction = transactionRepository.save(new Transaction(transaction.getDate(),
-                    transaction.getTotal(), transaction.getTransactionType(), transaction.getNotes()));
-            return new ResponseEntity<>(_transaction, HttpStatus.CREATED);
+            return new ResponseEntity<>(transactionRepository.save(transaction), HttpStatus.CREATED);
         } catch (Exception e) {
             log.info("createTransaction exception: "+ transaction.toString()+e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

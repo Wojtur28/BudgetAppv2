@@ -1,6 +1,7 @@
 package com.example.budgetappv2.user;
 
 import com.example.budgetappv2.group.Group;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,14 +25,14 @@ public class User {
     @NonNull
     private String password;
     @OneToMany(
-            mappedBy = "users",
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Group> groups;
 
-
-
-
-    //TODO: Create POST request for user with groups
+    @JsonManagedReference
+    public List<Group> getGroups() {
+        return groups;
+    }
 }

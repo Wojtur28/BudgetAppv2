@@ -2,7 +2,9 @@ package com.example.budgetappv2.category;
 
 import com.example.budgetappv2.group.Group;
 import com.example.budgetappv2.transaction.Transaction;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,5 +46,15 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
+
+    @JsonBackReference
+    public Group getGroup() {
+        return group;
+    }
+
+    @JsonManagedReference
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
 
 }

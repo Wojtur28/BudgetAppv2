@@ -2,6 +2,8 @@ package com.example.budgetappv2.group;
 
 import com.example.budgetappv2.category.Category;
 import com.example.budgetappv2.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +33,15 @@ public class Group {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User users;
+    private User user;
 
+    @JsonBackReference
+    public User getUser() {
+        return user;
+    }
+
+    @JsonManagedReference
+    public List<Category> getCategories() {
+        return categories;
+    }
 }

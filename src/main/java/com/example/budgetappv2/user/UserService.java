@@ -47,8 +47,7 @@ public class UserService {
 
     public ResponseEntity<User> addUser(User user) {
         try {
-            User _user = userRepository.save(new User(user.getUsername(), user.getPassword()));
-            return new ResponseEntity<>(_user, HttpStatus.CREATED);
+            return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
         } catch (Exception e) {
             log.info("createUser exception: "+ user.toString()+e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

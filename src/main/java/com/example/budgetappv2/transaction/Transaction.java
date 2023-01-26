@@ -1,6 +1,7 @@
 package com.example.budgetappv2.transaction;
 
 import com.example.budgetappv2.category.Category;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,4 +32,9 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @JsonBackReference
+    public Category getCategory() {
+        return category;
+    }
 }

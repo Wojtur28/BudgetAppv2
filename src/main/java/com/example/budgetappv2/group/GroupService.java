@@ -40,8 +40,7 @@ public class GroupService {
 
     public ResponseEntity<Group> addGroup(Group group) {
         try {
-            Group _group = groupRepository.save(new Group(group.getName()));
-            return new ResponseEntity<>(_group, HttpStatus.CREATED);
+            return new ResponseEntity<>(groupRepository.save(group), HttpStatus.CREATED);
         } catch (Exception e) {
             log.info("createGroup exception: "+ group.toString()+e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

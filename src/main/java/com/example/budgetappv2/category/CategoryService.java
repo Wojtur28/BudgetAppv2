@@ -38,10 +38,7 @@ public class CategoryService {
 
     public ResponseEntity<Category> addCategory(Category category) {
         try {
-            Category _category = categoryRepository.
-                    save(new Category(category.getBudget(), category.getName(),
-                            category.getStartDate(), category.getEndDate()));
-            return new ResponseEntity<>(_category, HttpStatus.CREATED);
+            return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.CREATED);
         }  catch (Exception e) {
             log.error("Error with \"addCategory\"");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
