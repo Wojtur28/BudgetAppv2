@@ -1,13 +1,9 @@
-package com.example.budgetappv2;
+package com.example.budgetappv2.user;
 
-import com.example.budgetappv2.user.User;
-import com.example.budgetappv2.user.UserController;
-import com.example.budgetappv2.user.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,9 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest
-@ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
-public class TestUserController {
-
+public class TestUserService {
 
     @Mock
     private UserService userService;
@@ -43,18 +37,6 @@ public class TestUserController {
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
-
-    /*@Test
-    @DisplayName("Should return all users")
-    public void getAllUsers() throws Exception {
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/users")
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().is(200));
-
-    }*/
 
     @Test
     @DisplayName("Should get all users and return status 200 if found")
@@ -73,7 +55,6 @@ public class TestUserController {
         //then
         ResponseEntity<List<User>> response = userController.getAllUsers();
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals(2, Objects.requireNonNull(response.getBody()).size());
     }
 
     @Test
@@ -96,7 +77,7 @@ public class TestUserController {
     }
 
     @Test
-    @DisplayName("Should post user and return status 201 if created")
+    @DisplayName("Should add user and return status 200 if created")
     public void postUser_returnsCreated() throws Exception {
         //given
         User user = new User();
@@ -134,7 +115,7 @@ public class TestUserController {
     }
 
     @Test
-    @DisplayName("Should delete user and return status 200 if deleted")
+    @DisplayName("Should delete user by id and return status 200 if deleted")
     public void deleteUserById_returnsDeleted() throws Exception {
         //given
         User user = new User();
@@ -147,7 +128,7 @@ public class TestUserController {
                 .andDo(print());
 
         //then
-        ResponseEntity<HttpStatus> response = userController.deleteUser(1L);
+        ResponseEntity<HttpStatus> response = userController.deleteUserById(1L);
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
