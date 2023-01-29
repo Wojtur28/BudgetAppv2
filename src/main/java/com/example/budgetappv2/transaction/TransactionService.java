@@ -21,7 +21,7 @@ public class TransactionService {
 
     public ResponseEntity<List<Transaction>> getAllTransactions() {
         try{
-            return new ResponseEntity<>(transactionRepository.findAll(), HttpStatus.FOUND);
+            return new ResponseEntity<>(transactionRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getAllTransaction\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -31,7 +31,7 @@ public class TransactionService {
     public ResponseEntity<Transaction> getTransactionById(Long id){
         try{
             return new ResponseEntity<>(transactionRepository.findById(id).stream().findFirst()
-                    .orElse(null), HttpStatus.FOUND);
+                    .orElse(null), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getTransactionById\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

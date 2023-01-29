@@ -22,7 +22,7 @@ public class GroupService {
     public ResponseEntity<Group> getGroupById(Long id) {
         try{
             return new ResponseEntity<>(groupRepository.findById(id).stream().findFirst()
-                    .orElse(null), HttpStatus.FOUND);
+                    .orElse(null), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getGroupById\"");
             return ResponseEntity.notFound().build();
@@ -31,7 +31,7 @@ public class GroupService {
 
     public ResponseEntity<List<Group>> getAllGroups(){
         try{
-            return new ResponseEntity<>(groupRepository.findAll(), HttpStatus.FOUND);
+            return new ResponseEntity<>(groupRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getAllGroups\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

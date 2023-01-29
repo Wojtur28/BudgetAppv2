@@ -22,7 +22,7 @@ public class UserService {
     public ResponseEntity<User> getUserById(Long id) {
         try{
             return new ResponseEntity<>(userRepository.findById(id).stream().findFirst()
-                    .orElse(null), HttpStatus.FOUND);
+                    .orElse(null), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getUserById\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -37,7 +37,7 @@ public class UserService {
 
     public ResponseEntity<List<User>> getAllUsers(){
         try{
-            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.FOUND);
+            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getAllUsers\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -20,7 +20,7 @@ public class CategoryService {
     public ResponseEntity<Category> getCategoryById(Long id) {
         try {
             return new ResponseEntity<>(categoryRepository.findById(id).stream().findFirst()
-                    .orElse(null), HttpStatus.FOUND);
+                    .orElse(null), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getCategoryById\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -29,7 +29,7 @@ public class CategoryService {
 
     public ResponseEntity<List<Category>> getAllCategories() {
         try {
-            return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.FOUND);
+            return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getAllCategory\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
