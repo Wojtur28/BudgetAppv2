@@ -43,7 +43,6 @@ public class TestGroupService {
         //given
         List<Group> groups = new ArrayList<>();
         groups.add(new Group());
-        groups.add(new Group());
         when(groupService.getAllGroups()).thenReturn(new ResponseEntity<>(groups, HttpStatus.OK));
         //when
         mockMvc.perform(get("/groups"))

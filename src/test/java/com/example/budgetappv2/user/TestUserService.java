@@ -44,7 +44,6 @@ public class TestUserService {
         //given
         List<User> users = new ArrayList<>();
         users.add(new User());
-        users.add(new User());
         when(userService.getAllUsers()).thenReturn(new ResponseEntity<>(users, HttpStatus.OK));
 
         //when
