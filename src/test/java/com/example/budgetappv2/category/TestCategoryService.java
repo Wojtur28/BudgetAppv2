@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -112,7 +113,7 @@ public class TestCategoryService {
         category.setId(1L);
         when(categoryService.deleteCategoryById(1L)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
         //when
-        mockMvc.perform(get("/categories/1"))
+        mockMvc.perform(delete("/categories/1"))
                 .andExpect(status().isOk())
                 .andDo(print());
         //then

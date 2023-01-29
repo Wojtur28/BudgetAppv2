@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,7 +84,7 @@ public class TestUserService {
         when(userService.addUser(user)).thenReturn(new ResponseEntity<>(user, HttpStatus.CREATED));
 
         //when
-        mockMvc.perform(get("/users"))
+        mockMvc.perform(post("/users"))
                 .andExpect(status().isOk())
                 .andDo(print());
 
@@ -122,7 +122,7 @@ public class TestUserService {
         when(userService.deleteUserById(1L)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         //when
-        mockMvc.perform(get("/users/1"))
+        mockMvc.perform(delete("/users/1"))
                 .andExpect(status().isOk())
                 .andDo(print());
 

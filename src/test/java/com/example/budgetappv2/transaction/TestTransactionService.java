@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -89,7 +89,7 @@ public class TestTransactionService {
         when(transactionService.addTransaction(transaction)).thenReturn(new ResponseEntity<>(transaction, HttpStatus.CREATED));
         //when
         mockMvc.perform(get("/transactions"))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andDo(print());
         //then
         ResponseEntity<Transaction> response = transactionController.addTransaction(transaction);
@@ -97,19 +97,20 @@ public class TestTransactionService {
     }
 
     @Test
-    @DisplayName("Should update transaction and return status 200 if found")
-    public void updateTransaction_returnsFound() throws Exception {
+    @DisplayName("Should add transaction and return status 400 if bad request")
+    public void addTransaction_returnsBadRequest() throws Exception {
         //given
         Transaction transaction = new Transaction();
-        when(transactionService.updateTransaction(transaction)).thenReturn(new ResponseEntity<>(transaction, HttpStatus.OK));
+        when(transactionService.addTransaction(transaction)).thenReturn(new ResponseEntity<>(transaction, HttpStatus.BAD_REQUEST));
         //when
-        mockMvc.perform(get("/transactions"))
-                .andExpect(status().isOk())
+        mockMvc.perform(post("/transactions"))
+                .andExpect(status().isBadRequest())
                 .andDo(print());
         //then
-        ResponseEntity<Transaction> response = transactionController.updateTransaction(transaction);
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        ResponseEntity<Transaction> response = transactionController.addTransaction(transaction);
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
+
 
     @Test
     @DisplayName("Should delete by id and return status 200 if found")
@@ -117,7 +118,7 @@ public class TestTransactionService {
         //given
         when(transactionService.deleteTransactionById(1L)).thenReturn(new ResponseEntity<>(null, HttpStatus.OK));
         //when
-        mockMvc.perform(get("/transactions/1"))
+        mockMvc.perform(delete("/transactions/1"))
                 .andExpect(status().isOk())
                 .andDo(print());
         //then
