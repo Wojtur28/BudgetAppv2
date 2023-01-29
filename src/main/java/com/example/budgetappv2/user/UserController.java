@@ -1,5 +1,6 @@
 package com.example.budgetappv2.user;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +10,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
 
     @Autowired
     UserService userService;
+
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {

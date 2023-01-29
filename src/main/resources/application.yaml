@@ -12,3 +12,13 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+server:
+  error:
+    include-binding-errors: always
+    include-message: always
+
