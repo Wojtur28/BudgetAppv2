@@ -38,7 +38,7 @@ public class TestCategoryService {
     }
 
     @Test
-    @DisplayName("Should get all categories and return status 200 if found")
+    @DisplayName("Should get all categories and return status 200")
     public void getAllCategories_returnsFound() throws Exception {
         //given
         List<Category> categories = new ArrayList<>();

@@ -38,7 +38,7 @@ public class TestGroupService {
     }
 
     @Test
-    @DisplayName("Should get all groups and return status 200 if found")
+    @DisplayName("Should get all groups and return status 200")
     public void getAllGroups_returnsFound() throws Exception {
         //given
         List<Group> groups = new ArrayList<>();

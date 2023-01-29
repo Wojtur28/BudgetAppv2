@@ -39,7 +39,7 @@ public class TestUserService {
     }
 
     @Test
-    @DisplayName("Should get all users and return status 200 if found")
+    @DisplayName("Should get all users and return status 200")
     public void getAllUsers_returnsFound() throws Exception {
         //given
         List<User> users = new ArrayList<>();
