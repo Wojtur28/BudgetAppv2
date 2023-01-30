@@ -14,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "groups")
-@Builder
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -23,6 +23,7 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -68,7 +69,8 @@ public class UserControllerTests {
                     .andExpect(jsonPath("$[0].username").value("Wojtur"))
                     .andExpect(jsonPath("$[0].password").value("zaq1@WSX"))
                     .andExpect(jsonPath("$[1].username").value("TEST"))
-                    .andExpect(jsonPath("$[1].password").value("1234"));
+                    .andExpect(jsonPath("$[1].password").value("1234"))
+                    .andDo(print());
 
         ResponseEntity<List<User>> response = userController.getAllUsers();
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -85,7 +87,8 @@ public class UserControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.username").value("Wojtur"))
-                .andExpect(jsonPath("$.password").value("zaq1@WSX"));
+                .andExpect(jsonPath("$.password").value("zaq1@WSX"))
+                .andDo(print());
 
         ResponseEntity<User> response = userController.getUserById(1L);
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -99,7 +102,8 @@ public class UserControllerTests {
         when(userService.getUserById(3L)).thenReturn(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
         mockMvc.perform(get("/users/3"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andDo(print());
 
         ResponseEntity<User> response = userController.getUserById(3L);
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -120,7 +124,8 @@ public class UserControllerTests {
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.username").value("Wojtur"))
-                .andExpect(jsonPath("$.password").value("zaq1@WSX"));
+                .andExpect(jsonPath("$.password").value("zaq1@WSX"))
+                .andDo(print());
 
         ResponseEntity<User> response = userController.addUser(users.get(0));
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -139,7 +144,8 @@ public class UserControllerTests {
                         "    \"username\": \"Wojtur\",\n" +
                         "    \"password\": \"zaq1@WSX\"\n" +
                         "}"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andDo(print());
 
         ResponseEntity<User> response = userController.addUser(users.get(0));
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -160,7 +166,8 @@ public class UserControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.username").value("Wojtur"))
-                .andExpect(jsonPath("$.password").value("zaq1@WSX"));
+                .andExpect(jsonPath("$.password").value("zaq1@WSX"))
+                .andDo(print());
 
         ResponseEntity<User> response = userController.updateUser(users.get(0));
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -179,7 +186,8 @@ public class UserControllerTests {
                         "    \"username\": \"Wojtur\",\n" +
                         "    \"password\": \"zaq1@WSX\"\n" +
                         "}"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andDo(print());
 
         ResponseEntity<User> response = userController.updateUser(users.get(0));
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -192,7 +200,8 @@ public class UserControllerTests {
         when(userService.deleteUserById(1L)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         mockMvc.perform(delete("/users/1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(print());
 
         ResponseEntity<HttpStatus> response = userController.deleteUserById(1L);
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -205,7 +214,8 @@ public class UserControllerTests {
         when(userService.deleteUserById(3L)).thenReturn(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
         mockMvc.perform(delete("/users/3"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andDo(print());
 
         ResponseEntity<HttpStatus> response = userController.deleteUserById(3L);
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
