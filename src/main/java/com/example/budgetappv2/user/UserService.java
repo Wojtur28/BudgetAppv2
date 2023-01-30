@@ -29,12 +29,6 @@ public class UserService {
         }
     }
 
-    /*public ResponseEntity<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(user -> ResponseEntity.ok().body(user))
-                .orElse(ResponseEntity.notFound().build());
-    }*/
-
     public ResponseEntity<List<User>> getAllUsers(){
         try{
             return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
@@ -42,7 +36,6 @@ public class UserService {
             log.error("Error with \"getAllUsers\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
     public ResponseEntity<User> addUser(User user) {

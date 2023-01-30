@@ -17,6 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "groups")
+@Builder
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

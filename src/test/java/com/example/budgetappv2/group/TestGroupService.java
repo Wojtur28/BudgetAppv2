@@ -4,15 +4,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class TestGroupService {
 
     @Mock
@@ -37,6 +39,17 @@ public class TestGroupService {
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(groupController).build();
     }
+
+    private final List<Group> groups = new ArrayList<>(Arrays.asList(
+            Group.builder()
+                    .id(1L)
+                    .name("Budzet Rodzinny")
+                    .build(),
+            Group.builder()
+                    .id(2L)
+                    .name("TEST")
+                    .build()
+    ));
 
     @Test
     @DisplayName("Should get all groups and return status 200")
