@@ -5,10 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class UserControllerTests {
 
     @Mock
@@ -110,7 +109,7 @@ public class UserControllerTests {
     }
 
     @Test
-    @DisplayName("Should post user and return status 201")
+    @DisplayName("Should add user and return status 201")
     public void should_post_user() throws Exception {
 
         when(userService.addUser(any(User.class))).thenReturn(new ResponseEntity<>(users.get(0), HttpStatus.CREATED));
@@ -133,7 +132,7 @@ public class UserControllerTests {
     }
 
     @Test
-    @DisplayName("Should post user with wrong data and return status 400")
+    @DisplayName("Should add user with wrong data and return status 400")
     public void should_post_user_with_wrong_data() throws Exception {
 
         when(userService.addUser(any(User.class))).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));

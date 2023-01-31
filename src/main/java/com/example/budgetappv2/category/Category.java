@@ -9,13 +9,15 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "categories")
@@ -31,11 +33,11 @@ public class Category {
     @Column(name = "start_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NonNull
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name = "end_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NonNull
-    private Date endDate;
+    private LocalDate endDate;
     @OneToMany(
             mappedBy = "category",
             cascade = CascadeType.ALL,

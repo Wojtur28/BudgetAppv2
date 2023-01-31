@@ -4,10 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(MockitoExtension.class)
+
+@SpringBootTest
 public class GroupControllerTests {
 
     @Mock
@@ -103,7 +103,7 @@ public class GroupControllerTests {
     }
 
     @Test
-    @DisplayName("Should post group and return status 201")
+    @DisplayName("Should add group and return status 201")
     public void should_post_group() throws Exception {
 
         when(groupService.addGroup(any(Group.class))).thenReturn(new ResponseEntity<>(groups.get(0) ,HttpStatus.CREATED));
@@ -124,7 +124,7 @@ public class GroupControllerTests {
     }
 
     @Test
-    @DisplayName("Should post group with wrong data and return status 400")
+    @DisplayName("Should add group with wrong data and return status 400")
     public void should_post_group_with_wrong_data() throws Exception {
 
         when(groupService.addGroup(any(Group.class))).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -165,7 +165,7 @@ public class GroupControllerTests {
     }
 
     @Test
-    @DisplayName("Should put group with wrong data and return status 400")
+    @DisplayName("Should update group with wrong data and return status 400")
     public void should_put_group_with_wrong_data() throws Exception {
 
         when(groupService.updateGroup(any(Group.class))).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
