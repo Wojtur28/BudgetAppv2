@@ -38,8 +38,26 @@ public class GroupService {
         }
     }
 
+    public ResponseEntity<Group> getGroupByName(String name) {
+        try{
+            return new ResponseEntity<>(groupRepository.findByName(name), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error with \"getGroupByName\"");
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
+
     public ResponseEntity<Group> addGroup(Group group) {
         try {
+            List<Group> allGroups = groupRepository.findAll();
+            for (Group g : allGroups) {
+                if (g.getName().equals(group.getName())) {
+                    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                }
+            }
             return new ResponseEntity<>(groupRepository.save(group), HttpStatus.CREATED);
         } catch (Exception e) {
             log.info("createGroup exception: "+ group.toString()+e.getMessage());

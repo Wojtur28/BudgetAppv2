@@ -23,6 +23,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NonNull
+    @Column(name = "name", unique = true)
     private String name;
 
     @OneToMany(

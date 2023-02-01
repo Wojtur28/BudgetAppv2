@@ -36,8 +36,23 @@ public class CategoryService {
         }
     }
 
+    public ResponseEntity<Category> getCategoryByName(String name) {
+        try {
+            return new ResponseEntity<>(categoryRepository.findGroupByName(name), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error with \"getCategoryByName\"");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     public ResponseEntity<Category> addCategory(Category category) {
         try {
+            List<Category> allCategories = categoryRepository.findAll();
+            for (Category c : allCategories) {
+                if (c.getName().equals(category.getName())) {
+                    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                }
+            }
             return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.CREATED);
         }  catch (Exception e) {
             log.error("Error with \"addCategory\"");

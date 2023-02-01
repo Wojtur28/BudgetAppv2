@@ -1,7 +1,6 @@
 package com.example.budgetappv2.user;
 
 import com.example.budgetappv2.group.Group;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,8 +31,4 @@ public class User {
     )
     private List<Group> groups;
 
-    @JsonManagedReference
-    public List<Group> getGroups() {
-        return groups;
-    }
 }

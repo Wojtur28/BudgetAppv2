@@ -24,6 +24,11 @@ public class GroupController {
         return groupService.getGroupById(id);
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Group> getGroupByName(@PathVariable String name) {
+        return groupService.getGroupByName(name);
+    }
+
     @PostMapping
     public ResponseEntity<Group> addGroup(@RequestBody Group group) {
         return groupService.addGroup(group);
