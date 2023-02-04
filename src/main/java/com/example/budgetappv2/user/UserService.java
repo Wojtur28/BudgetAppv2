@@ -38,6 +38,15 @@ public class UserService {
         }
     }
 
+    public ResponseEntity<User> getUserByUsername(String username) {
+        try{
+            return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error with \"getUserByUsername\"");
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     public ResponseEntity<User> addUser(User user) {
         try {
             return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);

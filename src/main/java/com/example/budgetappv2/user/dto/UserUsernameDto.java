@@ -1,4 +1,4 @@
 package com.example.budgetappv2.user.dto;
 
-public record UserUsernameDto(String name) {
+public record UserUsernameDto(String username) {
 }

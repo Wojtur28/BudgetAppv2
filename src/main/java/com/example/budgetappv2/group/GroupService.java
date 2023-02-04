@@ -48,8 +48,6 @@ public class GroupService {
     }
 
 
-
-
     public ResponseEntity<Group> addGroup(Group group) {
         try {
             List<Group> allGroups = groupRepository.findAll();

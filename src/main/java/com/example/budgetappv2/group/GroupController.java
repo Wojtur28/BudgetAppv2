@@ -1,11 +1,15 @@
 package com.example.budgetappv2.group;
 
+import com.example.budgetappv2.group.dto.GroupNameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
+
+import static com.example.budgetappv2.group.mapper.GroupDtoMapper.mapGroupToGroupNameDto;
 
 @RestController
 @RequestMapping("/groups")
@@ -17,6 +21,11 @@ public class GroupController {
     @GetMapping
     public ResponseEntity<List<Group>> getAllGroups() {
         return groupService.getAllGroups();
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<Stream<GroupNameDto>> getAllGroupsNames() {
+        return mapGroupToGroupNameDto(groupService.getAllGroups());
     }
 
     @GetMapping("/{id}")
