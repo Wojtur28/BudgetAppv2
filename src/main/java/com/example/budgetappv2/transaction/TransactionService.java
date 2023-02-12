@@ -2,6 +2,7 @@ package com.example.budgetappv2.transaction;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
+    @Cacheable("getAllTransactions")
     public ResponseEntity<List<Transaction>> getAllTransactions() {
         try{
             return new ResponseEntity<>(transactionRepository.findAll(), HttpStatus.OK);
@@ -28,6 +30,7 @@ public class TransactionService {
         }
     }
 
+    @Cacheable("getTransactionById")
     public ResponseEntity<Transaction> getTransactionById(Long id){
         try{
             return new ResponseEntity<>(transactionRepository.findById(id).stream().findFirst()

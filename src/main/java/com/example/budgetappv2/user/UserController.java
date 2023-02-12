@@ -27,11 +27,6 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    /*@GetMapping("/{name}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String name) {
-        return userService.getUserByUsername(name);
-    }*/
-
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody User user) {
         return userService.addUser(user);
