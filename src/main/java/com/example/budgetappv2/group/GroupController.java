@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.example.budgetappv2.group.mapper.GroupDtoMapper.mapGroupToGroupNameDto;
+import static com.example.budgetappv2.group.mapper.GroupDtoMapper.mapGroupToGroupDto;
+
 
 @RestController
 @RequestMapping("/groups")
@@ -22,10 +23,11 @@ public class GroupController {
     public ResponseEntity<List<Group>> getAllGroups() {
         return groupService.getAllGroups();
     }
+    // TODO: Change GetAllGroups to getGroups change name rest too
 
     @GetMapping("/name")
-    public ResponseEntity<Stream<GroupNameDto>> getAllGroupsNames() {
-        return mapGroupToGroupNameDto(groupService.getAllGroups());
+    public ResponseEntity<Stream<GroupNameDto>> getGroupsNames() {
+        return mapGroupToGroupDto(groupService.getAllGroups());
     }
 
     @GetMapping("/{id}")

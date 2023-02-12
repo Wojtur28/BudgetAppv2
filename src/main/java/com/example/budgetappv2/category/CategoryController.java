@@ -1,6 +1,6 @@
 package com.example.budgetappv2.category;
 
-import com.example.budgetappv2.category.dto.CategoryNameDto;
+import com.example.budgetappv2.category.dto.CategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.example.budgetappv2.category.mapper.CategoryDtoMapper.mapCategoryToCategoryNameDto;
+import static com.example.budgetappv2.category.mapper.CategoryDtoMapper.mapCategoryToCategoryDto;
+
 
 @RestController
 @RequestMapping("/categories")
@@ -24,8 +25,8 @@ public class CategoryController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Stream<CategoryNameDto>> getAllCategoriesNames() {
-        return mapCategoryToCategoryNameDto(categoryService.getAllCategories());
+    public ResponseEntity<Stream<CategoryDto>> getAllCategoriesNames() {
+        return mapCategoryToCategoryDto(categoryService.getAllCategories());
     }
 
     @GetMapping("/{id}")
