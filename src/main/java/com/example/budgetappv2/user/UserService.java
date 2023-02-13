@@ -2,7 +2,6 @@ package com.example.budgetappv2.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    @Cacheable("getUserById")
     public ResponseEntity<User> getUserById(Long id) {
         try{
             return new ResponseEntity<>(userRepository.findById(id).stream().findFirst()
@@ -31,8 +29,7 @@ public class UserService {
         }
     }
 
-    @Cacheable("getAllUsers")
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getUsers(){
         try{
             return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {

@@ -1,7 +1,6 @@
 package com.example.budgetappv2.category;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    @Cacheable("getCategoryById")
     public ResponseEntity<Category> getCategoryById(Long id) {
         try {
             return new ResponseEntity<>(categoryRepository.findById(id).stream().findFirst()
@@ -29,8 +27,7 @@ public class CategoryService {
         }
     }
 
-    @Cacheable("getAllCategories")
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<Category>> getCategories() {
         try {
             return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {

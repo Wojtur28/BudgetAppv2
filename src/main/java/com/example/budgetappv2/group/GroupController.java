@@ -1,6 +1,6 @@
 package com.example.budgetappv2.group;
 
-import com.example.budgetappv2.group.dto.GroupNameDto;
+import com.example.budgetappv2.group.dto.GroupDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,24 +10,25 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.example.budgetappv2.group.mapper.GroupDtoMapper.mapGroupToGroupDto;
+import static com.example.budgetappv2.group.mapper.GroupMapper.mapToGroup;
 
 
 @RestController
 @RequestMapping("/groups")
 public class GroupController {
 
+    private static final long EMPTY_ID = -1;
     @Autowired
     GroupService groupService;
 
     @GetMapping
-    public ResponseEntity<List<Group>> getAllGroups() {
-        return groupService.getAllGroups();
+    public ResponseEntity<List<Group>> getGroups() {
+        return groupService.getGroups();
     }
-    // TODO: Change GetAllGroups to getGroups change name rest too
 
     @GetMapping("/name")
-    public ResponseEntity<Stream<GroupNameDto>> getGroupsNames() {
-        return mapGroupToGroupDto(groupService.getAllGroups());
+    public ResponseEntity<Stream<GroupDto>> getGroupsNames() {
+        return mapGroupToGroupDto(groupService.getGroups());
     }
 
     @GetMapping("/{id}")
@@ -41,13 +42,13 @@ public class GroupController {
     }
 
     @PostMapping
-    public ResponseEntity<Group> addGroup(@RequestBody Group group) {
-        return groupService.addGroup(group);
+    public ResponseEntity<Group> addGroup(@RequestBody GroupDto groupDto) {
+        return groupService.addGroup(mapToGroup(EMPTY_ID, groupDto));
     }
 
-    @PutMapping
-    public ResponseEntity<Group> updateGroup(@RequestBody Group group) {
-        return groupService.updateGroup(group);
+    @PutMapping("/{id}")
+    public ResponseEntity<Group> updateGroup(@PathVariable long id, @RequestBody GroupDto groupDto) {
+        return groupService.updateGroup(mapToGroup(id, groupDto));
     }
 
     @DeleteMapping("/{id}")

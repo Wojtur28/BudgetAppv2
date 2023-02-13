@@ -2,7 +2,6 @@ package com.example.budgetappv2.group;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,15 @@ public class GroupService {
         this.groupRepository = groupRepository;
     }
 
-    @Cacheable("getGroupById")
+    public ResponseEntity<List<Group>> getGroups(){
+        try{
+            return new ResponseEntity<>(groupRepository.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error with \"getAllGroups\"");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     public ResponseEntity<Group> getGroupById(Long id) {
         try{
             return new ResponseEntity<>(groupRepository.findById(id).stream().findFirst()
@@ -28,16 +35,6 @@ public class GroupService {
         } catch (Exception e) {
             log.error("Error with \"getGroupById\"");
             return ResponseEntity.notFound().build();
-        }
-    }
-
-    @Cacheable("getAllGroups")
-    public ResponseEntity<List<Group>> getAllGroups(){
-        try{
-            return new ResponseEntity<>(groupRepository.findAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Error with \"getAllGroups\"");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -49,7 +46,6 @@ public class GroupService {
             return ResponseEntity.notFound().build();
         }
     }
-
 
     public ResponseEntity<Group> addGroup(Group group) {
         try {

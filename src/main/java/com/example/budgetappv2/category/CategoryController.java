@@ -10,24 +10,27 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.example.budgetappv2.category.mapper.CategoryDtoMapper.mapCategoryToCategoryDto;
+import static com.example.budgetappv2.category.mapper.CategoryMapper.mapToCategory;
 
 
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
 
+    private static final long EMPTY_ID = -1;
     @Autowired
     CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        return categoryService.getAllCategories();
+    public ResponseEntity<List<Category>> getCategories() {
+        return categoryService.getCategories();
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Stream<CategoryDto>> getAllCategoriesNames() {
-        return mapCategoryToCategoryDto(categoryService.getAllCategories());
+    public ResponseEntity<Stream<CategoryDto>> getCategoriesNames() {
+        return mapCategoryToCategoryDto(categoryService.getCategories());
     }
+    //TODO: I have to change name of this method. It's not returning names, but whole categories.
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
@@ -40,13 +43,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        return categoryService.addCategory(category);
+    public ResponseEntity<Category> addCategory(@RequestBody CategoryDto categoryDto) {
+        return categoryService.addCategory(mapToCategory(EMPTY_ID, categoryDto));
     }
 
-    @PutMapping
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
-        return categoryService.updateCategory(category);
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable long id, @RequestBody CategoryDto categoryDto) {
+        return categoryService.updateCategory(mapToCategory(id, categoryDto));
     }
 
     @DeleteMapping("/{id}")
