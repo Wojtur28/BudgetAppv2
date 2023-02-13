@@ -1,16 +1,16 @@
 package com.example.budgetappv2.group;
 
 import com.example.budgetappv2.group.dto.GroupDto;
+import com.example.budgetappv2.group.dto.GroupReadDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-import static com.example.budgetappv2.group.mapper.GroupDtoMapper.mapGroupToGroupDto;
 import static com.example.budgetappv2.group.mapper.GroupMapper.mapToGroup;
+import static com.example.budgetappv2.group.mapper.GroupReadDtoMapper.mapGroupToGroupReadDto;
 
 
 @RestController
@@ -22,13 +22,8 @@ public class GroupController {
     GroupService groupService;
 
     @GetMapping
-    public ResponseEntity<List<Group>> getGroups() {
-        return groupService.getGroups();
-    }
-
-    @GetMapping("/name")
-    public ResponseEntity<Stream<GroupDto>> getGroupsNames() {
-        return mapGroupToGroupDto(groupService.getGroups());
+    public ResponseEntity<Stream<GroupReadDto>> getGroups() {
+        return mapGroupToGroupReadDto(groupService.getGroups());
     }
 
     @GetMapping("/{id}")
@@ -40,7 +35,7 @@ public class GroupController {
     public ResponseEntity<Group> getGroupByName(@PathVariable String name) {
         return groupService.getGroupByName(name);
     }
-
+    //TODO: Change this method to use a DTO
     @PostMapping
     public ResponseEntity<Group> addGroup(@RequestBody GroupDto groupDto) {
         return groupService.addGroup(mapToGroup(EMPTY_ID, groupDto));

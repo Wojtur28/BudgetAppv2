@@ -1,11 +1,14 @@
 package com.example.budgetappv2.transaction;
 
+import com.example.budgetappv2.transaction.dto.TransactionReadDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.stream.Stream;
+
+import static com.example.budgetappv2.transaction.mapper.TransactionReadDtoMapper.mapTransactionToTransactionReadDto;
 
 @RestController
 @RequestMapping("/transactions")
@@ -17,8 +20,8 @@ public class TransactionController {
 
 
     @GetMapping
-    public ResponseEntity<List<Transaction>> getTransactions() {
-        return transactionService.getTransactions();
+    public ResponseEntity<Stream<TransactionReadDto>> getTransactions() {
+        return mapTransactionToTransactionReadDto(transactionService.getTransactions());
     }
 
     @GetMapping("/{id}")

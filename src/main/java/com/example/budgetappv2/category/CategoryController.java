@@ -1,16 +1,16 @@
 package com.example.budgetappv2.category;
 
 import com.example.budgetappv2.category.dto.CategoryDto;
+import com.example.budgetappv2.category.dto.CategoryReadDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-import static com.example.budgetappv2.category.mapper.CategoryDtoMapper.mapCategoryToCategoryDto;
 import static com.example.budgetappv2.category.mapper.CategoryMapper.mapToCategory;
+import static com.example.budgetappv2.category.mapper.CategoryReadDtoMapper.mapCategoryToCategoryReadDto;
 
 
 @RestController
@@ -22,15 +22,9 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> getCategories() {
-        return categoryService.getCategories();
+    public ResponseEntity<Stream<CategoryReadDto>> getCategories() {
+        return mapCategoryToCategoryReadDto(categoryService.getCategories());
     }
-
-    @GetMapping("/name")
-    public ResponseEntity<Stream<CategoryDto>> getCategoriesNames() {
-        return mapCategoryToCategoryDto(categoryService.getCategories());
-    }
-    //TODO: I have to change name of this method. It's not returning names, but whole categories.
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
