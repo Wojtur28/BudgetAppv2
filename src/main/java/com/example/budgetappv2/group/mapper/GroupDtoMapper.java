@@ -13,7 +13,7 @@ public class GroupDtoMapper {
     public static ResponseEntity<Stream<GroupDto>>mapGroupToGroupDto(ResponseEntity<List<Group>> groups) {
         Stream<GroupDto> groupNameDtoStream = Objects.requireNonNull(groups.getBody())
                 .stream()
-                .map(group -> new GroupDto(group.getId(), group.getName()));
+                .map(group -> new GroupDto(group.getName()));
         return ResponseEntity.ok(groupNameDtoStream);
     }
 }

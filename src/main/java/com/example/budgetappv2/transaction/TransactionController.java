@@ -1,22 +1,26 @@
 package com.example.budgetappv2.transaction;
 
+import com.example.budgetappv2.transaction.dto.TransactionDto;
 import com.example.budgetappv2.transaction.dto.TransactionReadDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Stream;
 
+import static com.example.budgetappv2.transaction.mapper.TransactionMapper.mapToTransaction;
 import static com.example.budgetappv2.transaction.mapper.TransactionReadDtoMapper.mapTransactionToTransactionReadDto;
 
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
 
+    private static final long EMPTY_ID = -1;
+    private final TransactionService transactionService;
 
-    @Autowired
-    TransactionService transactionService;
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
 
     @GetMapping
@@ -30,13 +34,13 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
-        return transactionService.addTransaction(transaction);
+    public ResponseEntity<Transaction> addTransaction(@RequestBody TransactionDto transactionDto) {
+        return transactionService.addTransaction(mapToTransaction(EMPTY_ID, transactionDto));
     }
 
-    @PutMapping
-    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction transaction) {
-        return transactionService.updateTransaction(transaction);
+    @PutMapping("/{id}")
+    public ResponseEntity<Transaction> updateTransaction(@PathVariable long id, @RequestBody TransactionDto transactionDto) {
+        return transactionService.updateTransaction(mapToTransaction(id, transactionDto));
     }
 
     @DeleteMapping("/{id}")

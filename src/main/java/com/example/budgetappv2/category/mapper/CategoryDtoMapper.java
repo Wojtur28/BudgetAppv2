@@ -13,7 +13,7 @@ public class CategoryDtoMapper {
     public static ResponseEntity<Stream<CategoryDto>> mapCategoryToCategoryDto(ResponseEntity<List<Category>> categories) {
         Stream<CategoryDto> categoryDtoStream = Objects.requireNonNull(categories.getBody())
                 .stream()
-                .map(category -> new CategoryDto(category.getId(), category.getBudget(), category.getName(), category.getStartDate(), category.getEndDate()));
+                .map(category -> new CategoryDto(category.getBudget(), category.getName(), category.getStartDate(), category.getEndDate()));
         return ResponseEntity.ok(categoryDtoStream);
     }
 }

@@ -2,7 +2,6 @@ package com.example.budgetappv2.group;
 
 import com.example.budgetappv2.group.dto.GroupDto;
 import com.example.budgetappv2.group.dto.GroupReadDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +17,11 @@ import static com.example.budgetappv2.group.mapper.GroupReadDtoMapper.mapGroupTo
 public class GroupController {
 
     private static final long EMPTY_ID = -1;
-    @Autowired
-    GroupService groupService;
+    private final GroupService groupService;
+
+    public GroupController(GroupService groupService) {
+        this.groupService = groupService;
+    }
 
     @GetMapping
     public ResponseEntity<Stream<GroupReadDto>> getGroups() {

@@ -2,7 +2,6 @@ package com.example.budgetappv2.category;
 
 import com.example.budgetappv2.category.dto.CategoryDto;
 import com.example.budgetappv2.category.dto.CategoryReadDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +17,11 @@ import static com.example.budgetappv2.category.mapper.CategoryReadDtoMapper.mapC
 public class CategoryController {
 
     private static final long EMPTY_ID = -1;
-    @Autowired
-    CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping
     public ResponseEntity<Stream<CategoryReadDto>> getCategories() {
