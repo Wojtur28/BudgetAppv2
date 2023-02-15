@@ -37,7 +37,6 @@ public class GroupController {
     public ResponseEntity<Group> getGroupByName(@PathVariable String name) {
         return groupService.getGroupByName(name);
     }
-    //TODO: Change this method to use a DTO
     @PostMapping
     public ResponseEntity<Group> addGroup(@RequestBody GroupDto groupDto) {
         return groupService.addGroup(mapToGroup(EMPTY_ID, groupDto));

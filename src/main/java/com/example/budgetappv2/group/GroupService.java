@@ -40,7 +40,8 @@ public class GroupService {
 
     public ResponseEntity<Group> getGroupByName(String name) {
         try{
-            return new ResponseEntity<>(groupRepository.findByName(name), HttpStatus.OK);
+            return new ResponseEntity<>(groupRepository.findByName(name).stream().findFirst()
+                    .orElse(null), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getGroupByName\"");
             return ResponseEntity.notFound().build();

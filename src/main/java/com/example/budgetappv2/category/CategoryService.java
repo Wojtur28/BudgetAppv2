@@ -38,7 +38,8 @@ public class CategoryService {
 
     public ResponseEntity<Category> getCategoryByName(String name) {
         try {
-            return new ResponseEntity<>(categoryRepository.findGroupByName(name), HttpStatus.OK);
+            return new ResponseEntity<>(categoryRepository.findCategoryByName(name).stream().findFirst()
+                    .orElse(null), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error with \"getCategoryByName\"");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
