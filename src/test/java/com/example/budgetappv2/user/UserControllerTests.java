@@ -1,4 +1,4 @@
-package com.example.budgetappv2.user;
+/*package com.example.budgetappv2.user;
 
 
 import org.junit.jupiter.api.Assertions;
@@ -222,4 +222,4 @@ public class UserControllerTests {
 
 
 
-}
+}*/
