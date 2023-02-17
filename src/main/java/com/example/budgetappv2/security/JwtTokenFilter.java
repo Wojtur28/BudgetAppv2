@@ -17,9 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Collections;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -41,17 +39,24 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     public UsernamePasswordAuthenticationToken getusernamePasswordAuthenticationToken(String token){
-        Algorithm algorithm = Algorithm.HMAC256(KEY.getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(KEY);
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("budgetApp")
                 .build();
         DecodedJWT decodedJWT = verifier.verify(token.substring(7));
+        Boolean isAdmin = decodedJWT.getClaim("isAdmin").asBoolean();
+        String role = "ROLE_USER";
+        if(isAdmin){
+            role = "ROLE_ADMIN";
+        }
 
-        String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+        /*String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
 
-        List<SimpleGrantedAuthority> collect = Stream.of(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        List<SimpleGrantedAuthority> collect = Stream.of(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList());*/
+
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role);
 
 
-        return new UsernamePasswordAuthenticationToken(decodedJWT.getSubject(), null, collect);
+        return new UsernamePasswordAuthenticationToken(decodedJWT.getSubject(), null, Collections.singleton(simpleGrantedAuthority));
     }
 }
