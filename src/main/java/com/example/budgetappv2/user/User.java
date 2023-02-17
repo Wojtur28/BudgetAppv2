@@ -28,6 +28,8 @@ public class User implements UserDetails {
     private String username;
     @NonNull
     private String password;
+
+
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
