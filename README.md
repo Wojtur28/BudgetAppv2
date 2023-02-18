@@ -31,3 +31,43 @@ docker run -d -it -p 8081:8080/tcp --name budget wojtur/budget:v2
 
 ## Database Diagram:
 ![Diagram](https://user-images.githubusercontent.com/79547731/215884117-917a4860-e9fe-4b11-ad1c-56181fa4c003.PNG)
+
+
+## API Reference (To refactor)
+
+#### Login
+
+```http
+  POST /users/login
+```
+
+#### Get all users
+
+```http
+  GET /users
+```
+
+
+#### Get user
+
+```http
+  GET /users/{id}
+```
+
+
+#### Create user
+```http
+  POST /users
+```
+
+
+#### Update user
+```http
+  PUT /users/{id}
+```
+
+#### Delete user
+```http
+  DELETE /users/{id}
+```
+
