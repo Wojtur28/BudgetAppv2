@@ -6,6 +6,7 @@ REST API to control your expenses and income.
 * [General Info](#general-information)
 * [Usage](#usage)
 * [Technologies Used](#technologies-used)
+* [API Reference](#api-reference-to-refactor)
 * [Database Diagram](#database-diagram)
 
 
