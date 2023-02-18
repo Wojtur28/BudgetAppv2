@@ -36,6 +36,12 @@ docker run -d -it -p 8081:8080/tcp --name budget wojtur/budget:v2
 
 ## API Reference (To refactor)
 
+### Authentication
+REST API provides JWT token authentication, you have to use token to others endpoints
+
+![image](https://user-images.githubusercontent.com/79547731/219857772-e1ac97fd-23fd-41d3-ab30-cb7b7a3d8978.png)
+
+
 #### Login
 
 ```http
