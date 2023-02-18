@@ -1,5 +1,6 @@
 package com.example.budgetappv2.security;
 
+import com.example.budgetappv2.user.Role;
 import com.example.budgetappv2.user.User;
 import com.example.budgetappv2.user.UserRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -31,9 +32,14 @@ public class SecurityConfig {
 
 
     @EventListener(ApplicationReadyEvent.class)
-    public void users() {
-        User user = new User("admin", getBcryptPasswordEncoder().encode("admin"));
-        userRepository.save(user);
+    public void admin() {
+        if(!userRepository.existsByUsername("admin")) {
+            User user = new User();
+            user.setUsername("admin");
+            user.setPassword(getBcryptPasswordEncoder().encode("admin"));
+            user.setRole(Role.ADMIN);
+            userRepository.save(user);
+        }
     }
 
     @Bean

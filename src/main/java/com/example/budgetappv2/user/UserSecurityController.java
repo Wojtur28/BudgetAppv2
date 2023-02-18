@@ -38,7 +38,7 @@ public class UserSecurityController {
             String token = JWT.create()
                     .withSubject(user.getUsername())
                     .withIssuer("budgetApp")
-                    .withClaim("isAdmin", true)
+                    .withClaim("roles", Role.ADMIN.name())
                     .sign(algorithm);
 
             AuthResponse authResponse = new AuthResponse(user.getUsername(), token);

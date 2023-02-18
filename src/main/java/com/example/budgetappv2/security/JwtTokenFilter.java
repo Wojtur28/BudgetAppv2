@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.budgetappv2.user.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,19 +45,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 .withIssuer("budgetApp")
                 .build();
         DecodedJWT decodedJWT = verifier.verify(token.substring(7));
-        Boolean isAdmin = decodedJWT.getClaim("isAdmin").asBoolean();
-        String role = "ROLE_USER";
-        if(isAdmin){
-            role = "ROLE_ADMIN";
-        }
 
-        /*String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-
-        List<SimpleGrantedAuthority> collect = Stream.of(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList());*/
-
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role);
-
-
-        return new UsernamePasswordAuthenticationToken(decodedJWT.getSubject(), null, Collections.singleton(simpleGrantedAuthority));
+        return new UsernamePasswordAuthenticationToken(decodedJWT.getSubject(), null, Collections.singleton(new SimpleGrantedAuthority(Role.ADMIN.name())));
     }
 }
