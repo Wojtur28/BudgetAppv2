@@ -10,6 +10,7 @@ public class UserMapper {
                 .id(id)
                 .username(userDto.username())
                 .password(userDto.password())
+                .role(userDto.role())
                 .build();
     }
 }
