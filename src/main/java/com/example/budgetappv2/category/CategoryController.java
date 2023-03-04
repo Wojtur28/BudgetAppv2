@@ -35,8 +35,8 @@ public class CategoryController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Category> getCategoryByName(@PathVariable String name) {
-        return categoryService.getCategoryByName(name);
+    public ResponseEntity<CategoryReadDto> getCategoryByName(@PathVariable String name) {
+        return mapCategoryToCategoryReadDto(categoryService.getCategoryByName(name));
     }
 
     @PostMapping
