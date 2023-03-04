@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import static com.example.budgetappv2.transaction.mapper.TransactionMapper.mapToTransaction;
 import static com.example.budgetappv2.transaction.mapper.TransactionReadDtoMapper.mapTransactionToTransactionReadDto;
+import static com.example.budgetappv2.transaction.mapper.TransactionReadDtoMapper.mapTransactionsToTransactionsReadDto;
 
 @RestController
 @RequestMapping("/transactions")
@@ -25,12 +26,12 @@ public class TransactionController {
 
     @GetMapping
     public ResponseEntity<Stream<TransactionReadDto>> getTransactions() {
-        return mapTransactionToTransactionReadDto(transactionService.getTransactions());
+        return mapTransactionsToTransactionsReadDto(transactionService.getTransactions());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable long id) {
-        return transactionService.getTransactionById(id);
+    public ResponseEntity<TransactionReadDto> getTransactionById(@PathVariable long id) {
+        return mapTransactionToTransactionReadDto(transactionService.getTransactionById(id));
     }
 
     @PostMapping

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class TransactionReadDtoMapper {
 
-    public static ResponseEntity<Stream<TransactionReadDto>> mapTransactionToTransactionReadDto(ResponseEntity<List<Transaction>> transactions) {
+    public static ResponseEntity<Stream<TransactionReadDto>> mapTransactionsToTransactionsReadDto(ResponseEntity<List<Transaction>> transactions) {
         Stream<TransactionReadDto> transactionReadDtoStream = Objects.requireNonNull(transactions.getBody())
                 .stream()
                 .map(transaction -> TransactionReadDto.builder()
@@ -21,5 +21,17 @@ public class TransactionReadDtoMapper {
                         .notes(transaction.getNotes())
                         .build());
         return ResponseEntity.ok(transactionReadDtoStream);
+    }
+
+    // TODO: Refactor this method to use the same method as above
+    public static ResponseEntity<TransactionReadDto> mapTransactionToTransactionReadDto(ResponseEntity<Transaction> transaction) {
+        TransactionReadDto transactionReadDto = TransactionReadDto.builder()
+                .id(Objects.requireNonNull(transaction.getBody()).getId())
+                .date(transaction.getBody().getDate())
+                .total(transaction.getBody().getTotal())
+                .transactionType(transaction.getBody().getTransactionType())
+                .notes(transaction.getBody().getNotes())
+                .build();
+        return ResponseEntity.ok(transactionReadDto);
     }
 }

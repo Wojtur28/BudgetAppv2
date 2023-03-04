@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class GroupReadDtoMapper {
 
-    public static ResponseEntity<Stream<GroupReadDto>> mapGroupToGroupReadDto(ResponseEntity<List<Group>> groups) {
+    public static ResponseEntity<Stream<GroupReadDto>> mapGroupsToGroupsReadDto(ResponseEntity<List<Group>> groups) {
         Stream<GroupReadDto> groupReadDtoStream = Objects.requireNonNull(groups.getBody())
                 .stream()
                 .map(group -> GroupReadDto.builder()
@@ -40,5 +40,34 @@ public class GroupReadDtoMapper {
                         .build());
 
         return ResponseEntity.ok(groupReadDtoStream);
+    }
+
+    // TODO: Refactor this method to use the same method as above
+
+    public static ResponseEntity<GroupReadDto> mapGroupToGroupReadDto(ResponseEntity<Group> group) {
+        GroupReadDto groupReadDto = GroupReadDto.builder()
+                .id(Objects.requireNonNull(group.getBody()).getId())
+                .name(group.getBody().getName())
+                .categories(group.getBody().getCategories().stream()
+                        .map(category -> CategoryReadDto.builder()
+                                .id(category.getId())
+                                .budget(category.getBudget().doubleValue())
+                                .name(category.getName())
+                                .startDate(category.getStartDate().toString())
+                                .endDate(category.getEndDate().toString())
+                                .transactions(category.getTransactions().stream()
+                                        .map(transaction -> TransactionReadDto.builder()
+                                                .id(transaction.getId())
+                                                .date(transaction.getDate())
+                                                .total(transaction.getTotal())
+                                                .transactionType(transaction.getTransactionType())
+                                                .notes(transaction.getNotes())
+                                                .build()
+                                        ).collect(Collectors.toList()))
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
+
+        return ResponseEntity.ok(groupReadDto);
     }
 }

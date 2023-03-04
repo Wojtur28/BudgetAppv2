@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Stream;
 
 import static com.example.budgetappv2.category.mapper.CategoryMapper.mapToCategory;
+import static com.example.budgetappv2.category.mapper.CategoryReadDtoMapper.mapCategoriesToCategoriesReadDto;
 import static com.example.budgetappv2.category.mapper.CategoryReadDtoMapper.mapCategoryToCategoryReadDto;
 
 
@@ -25,12 +26,12 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<Stream<CategoryReadDto>> getCategories() {
-        return mapCategoryToCategoryReadDto(categoryService.getCategories());
+        return mapCategoriesToCategoriesReadDto(categoryService.getCategories());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryReadDto> getCategoryById(@PathVariable long id) {
+        return mapCategoryToCategoryReadDto(categoryService.getCategoryById(id));
     }
 
     @GetMapping("/name/{name}")

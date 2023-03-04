@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import static com.example.budgetappv2.user.mapper.UserMapper.mapToUser;
 import static com.example.budgetappv2.user.mapper.UserReadDtoMapper.mapUserToUserReadDto;
+import static com.example.budgetappv2.user.mapper.UserReadDtoMapper.mapUsersToUsersReadDto;
 
 @RestController
 @RequestMapping("/users")
@@ -25,12 +26,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Stream<UserReadDto>> getUsers() {
-        return mapUserToUserReadDto(userService.getUsers());
+        return mapUsersToUsersReadDto(userService.getUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserReadDto> getUserById(@PathVariable long id) {
+        return mapUserToUserReadDto(userService.getUserById(id));
     }
 
     @PostMapping

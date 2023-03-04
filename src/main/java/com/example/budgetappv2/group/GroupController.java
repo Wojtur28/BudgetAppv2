@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Stream;
 
 import static com.example.budgetappv2.group.mapper.GroupMapper.mapToGroup;
+
 import static com.example.budgetappv2.group.mapper.GroupReadDtoMapper.mapGroupToGroupReadDto;
+import static com.example.budgetappv2.group.mapper.GroupReadDtoMapper.mapGroupsToGroupsReadDto;
 
 
 @RestController
@@ -25,17 +27,17 @@ public class GroupController {
 
     @GetMapping
     public ResponseEntity<Stream<GroupReadDto>> getGroups() {
-        return mapGroupToGroupReadDto(groupService.getGroups());
+        return mapGroupsToGroupsReadDto(groupService.getGroups());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> getGroupById(@PathVariable long id) {
-        return groupService.getGroupById(id);
+    public ResponseEntity<GroupReadDto> getGroupById(@PathVariable long id) {
+        return mapGroupToGroupReadDto(groupService.getGroupById(id));
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<Group> getGroupByName(@PathVariable String name) {
-        return groupService.getGroupByName(name);
+        return groupService.getGroupByName(name); // TODO: Refactor this to use GroupReadDto
     }
     @PostMapping
     public ResponseEntity<Group> addGroup(@RequestBody GroupDto groupDto) {

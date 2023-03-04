@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class CategoryReadDtoMapper {
 
-    public static ResponseEntity<Stream<CategoryReadDto>> mapCategoryToCategoryReadDto(ResponseEntity<List<Category>> categories) {
+    public static ResponseEntity<Stream<CategoryReadDto>> mapCategoriesToCategoriesReadDto(ResponseEntity<List<Category>> categories) {
         Stream<CategoryReadDto> categoryReadDtoStream = Objects.requireNonNull(categories.getBody())
                 .stream()
                 .map(category -> CategoryReadDto.builder()
@@ -34,6 +34,29 @@ public class CategoryReadDtoMapper {
 
         return ResponseEntity.ok(categoryReadDtoStream);
     }
+
+    // TODO: Refactor this method to use the same method as above
+    public static ResponseEntity<CategoryReadDto> mapCategoryToCategoryReadDto(ResponseEntity<Category> category) {
+        CategoryReadDto categoryReadDto = CategoryReadDto.builder()
+                .id(Objects.requireNonNull(category.getBody()).getId())
+                .name(category.getBody().getName())
+                .budget(category.getBody().getBudget().doubleValue())
+                .startDate(category.getBody().getStartDate().toString())
+                .endDate(category.getBody().getEndDate().toString())
+                .transactions(category.getBody().getTransactions().stream()
+                        .map(transaction -> TransactionReadDto.builder()
+                                .id(transaction.getId())
+                                .date(transaction.getDate())
+                                .total(transaction.getTotal())
+                                .transactionType(transaction.getTransactionType())
+                                .notes(transaction.getNotes())
+                                .build()
+                        ).collect(Collectors.toList()))
+                .build();
+
+        return ResponseEntity.ok(categoryReadDto);
+    }
+
 
 }
 

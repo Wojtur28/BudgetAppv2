@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class UserReadDtoMapper {
 
-    public static ResponseEntity<Stream<UserReadDto>> mapUserToUserReadDto(ResponseEntity<List<User>> users) {
+    public static ResponseEntity<Stream<UserReadDto>> mapUsersToUsersReadDto(ResponseEntity<List<User>> users) {
         Stream<UserReadDto> userReadDtoStream = Objects.requireNonNull(users.getBody())
                 .stream()
                 .map(user -> UserReadDto.builder()
@@ -47,6 +47,40 @@ public class UserReadDtoMapper {
                                 ).collect(Collectors.toList())).build());
 
         return ResponseEntity.ok(userReadDtoStream);
+    }
+
+    //TODO: Refactor this method to use the above method
+    public static ResponseEntity<UserReadDto> mapUserToUserReadDto(ResponseEntity<User> user) {
+        UserReadDto userReadDto = UserReadDto.builder()
+                .id(Objects.requireNonNull(user.getBody()).getId())
+                .username(user.getBody().getUsername())
+                .password(user.getBody().getPassword())
+                .groups(user.getBody().getGroups().stream()
+                        .map(group -> GroupReadDto.builder()
+                                .id(group.getId())
+                                .name(group.getName())
+                                .categories(group.getCategories().stream()
+                                        .map(category -> CategoryReadDto.builder()
+                                                .id(category.getId())
+                                                .name(category.getName())
+                                                .budget(category.getBudget().doubleValue())
+                                                .startDate(category.getStartDate().toString())
+                                                .endDate(category.getEndDate().toString())
+                                                .transactions(category.getTransactions().stream()
+                                                        .map(transaction -> TransactionReadDto.builder()
+                                                                .id(transaction.getId())
+                                                                .date(transaction.getDate())
+                                                                .total(transaction.getTotal())
+                                                                .transactionType(transaction.getTransactionType())
+                                                                .notes(transaction.getNotes())
+                                                                .build()
+                                                        ).collect(Collectors.toList()))
+                                                .build()
+                                        ).collect(Collectors.toList()))
+                                .build()
+                        ).collect(Collectors.toList())).build();
+
+        return ResponseEntity.ok(userReadDto);
     }
 }
 
