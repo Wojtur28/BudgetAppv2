@@ -12,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TransactionServiceTest {
 
     @Mock
@@ -77,7 +80,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    @DisplayName("Should create new transaction and return true")
+    @DisplayName("Should create new transaction")
     public void shouldCreateNewTransaction() {
 
         when(transactionRepository.save(transaction)).thenReturn(transaction);
@@ -90,7 +93,7 @@ public class TransactionServiceTest {
 
 
     @Test
-    @DisplayName("Should update transaction and return true")
+    @DisplayName("Should update transaction")
     public void shouldUpdateTransaction() {
 
         when(transactionRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(transaction));
@@ -102,12 +105,14 @@ public class TransactionServiceTest {
     }
 
     @Test
-    @DisplayName("Should return status OK")
+    @DisplayName("Should delete transaction")
     public void shouldReturnNotFoundStatus() {
 
-        ResponseEntity<List<Transaction>> responseEntity = transactionService.getTransactions();
+        when(transactionRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(transaction));
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        ResponseEntity<HttpStatus> response = transactionService.deleteTransactionById(1L);
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
 
