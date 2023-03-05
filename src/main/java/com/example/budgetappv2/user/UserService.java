@@ -66,7 +66,7 @@ public class UserService {
     public ResponseEntity<HttpStatus> deleteUserById(Long id) {
         try {
             userRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             log.info("deleteUser exception: "+ id.toString()+e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
