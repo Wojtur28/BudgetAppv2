@@ -88,6 +88,19 @@ public class GroupControllerTest {
 
     @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @DisplayName("Should return group by name")
+    public void shouldReturnGroupByName() throws Exception {
+        when(groupService.getGroupByName("test1")).thenReturn(group1);
+
+        mockMvc.perform(get("/groups/name/test1"))
+                .andExpect(status().isOk())
+                .andExpect(result -> contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> jsonPath("$.id", is(1)))
+                .andExpect(result -> jsonPath("$.name", is("test1")));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     @DisplayName("Should create group")
     public void shouldCreateGroup() throws Exception {
         when(groupService.addGroup(group1.getBody())).thenReturn(group1);
