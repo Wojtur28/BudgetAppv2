@@ -41,7 +41,6 @@ public class TransactionControllerTest {
     private MockMvc mockMvc;
 
     private ResponseEntity<Transaction> transaction1;
-    private ResponseEntity<Transaction> transaction2;
     private ResponseEntity<List<Transaction>> transactions;
 
     @BeforeEach
@@ -54,7 +53,7 @@ public class TransactionControllerTest {
                 .notes("test1")
                 .build());
 
-        transaction2 = ResponseEntity.ok(Transaction.builder()
+        ResponseEntity<Transaction> transaction2 = ResponseEntity.ok(Transaction.builder()
                 .id(2L)
                 .date(LocalDate.of(2021, 1, 1))
                 .total(BigDecimal.valueOf(2500))
@@ -104,11 +103,10 @@ public class TransactionControllerTest {
                 .andExpect(result -> jsonPath("$.notes", is("test1")));
     }
 
-    // write test for add transaction
 
     @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
-    @DisplayName("Should add transaction")
+    @DisplayName("Should create transaction")
     public void addTransaction() throws Exception {
 
         when(transactionService.addTransaction(transaction1.getBody())).thenReturn(transaction1);
@@ -131,13 +129,11 @@ public class TransactionControllerTest {
                 .andExpect(result -> jsonPath("$.notes", is("test1")));
     }
 
-    // write test for update transaction
-
     @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     @DisplayName("Should update transaction")
     public void updateTransaction() throws Exception {
-
+        when(transactionService.updateTransaction(transaction1.getBody())).thenReturn(transaction1);
 
         mockMvc.perform(put("/transactions/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -155,6 +151,18 @@ public class TransactionControllerTest {
                 .andExpect(result -> jsonPath("$.total", is(BigDecimal.valueOf(100))))
                 .andExpect(result -> jsonPath("$.transactionType", is(TransactionType.TRANSFER)))
                 .andExpect(result -> jsonPath("$.notes", is("test1")));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @DisplayName("Should delete transaction by id")
+    public void deleteTransactionById() throws Exception {
+
+        when(transactionService.deleteTransactionById(1L)).thenReturn(ResponseEntity.ok().build());
+
+
+        mockMvc.perform(delete("/transactions/1"))
+                .andExpect(status().isOk());
     }
 
 
