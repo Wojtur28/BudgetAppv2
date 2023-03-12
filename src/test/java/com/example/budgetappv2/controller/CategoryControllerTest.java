@@ -150,7 +150,7 @@ public class CategoryControllerTest {
 
         when(categoryService.updateCategory(category1.getBody())).thenReturn(category1);
 
-        mockMvc.perform(post("/categories")
+        mockMvc.perform(put("/categories/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
